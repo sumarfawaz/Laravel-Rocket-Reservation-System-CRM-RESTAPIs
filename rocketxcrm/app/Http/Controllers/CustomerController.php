@@ -39,7 +39,7 @@ class CustomerController extends Controller
             'phone_number' => 'required|string|unique:customers|max:255',
             'email' => 'required|string|email|unique:customers|max:255',
             'age' => 'required|integer|max:255',
-            'occupation' => 'required|string|max:255',
+            'occcupation' => 'required|string|max:255',
             'nationality' => 'required|string|max:255',
         ]);
 
@@ -59,46 +59,56 @@ class CustomerController extends Controller
         ], 201);
     }
 
-    public function update(Request $request, $id)
-    {
-        $validator = Validator::make($request->all(), [
-            'epassportid' => 'required|string|unique:customers|max:255',
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'phone_number' => 'required|string|unique:customers|max:255',
-            'email' => 'required|string|email|unique:customers|max:255',
-            'age' => 'required|integer|max:255',
-            'occupation' => 'required|string|max:255',
-            'nationality' => 'required|string|max:255',
-        ]);
+    public function update(Request $request, $epassportid)
+{
+    // Find the customer by epassportid
+    $customer = Customer::where('epassportid', $epassportid)->firstOrFail();
 
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Validation error',
-                'errors' => $validator->errors()
-            ], 422);
-        }
+    // Validate the incoming data
+    $validator = Validator::make($request->all(), [
+        'epassportid' => 'string|unique:customers,epassportid,' . $customer->id . '|max:255',  // Ensure the epassportid is unique except for the current customer
+        'first_name' => 'sometimes|string|max:255',
+        'last_name' => 'sometimes|string|max:255',
+        'phone_number' => 'string|unique:customers,phone_number,' . $customer->id . '|max:255',  // Ensure phone number is unique except for the current customer
+        'email' => 'sometimes|string|email|unique:customers,email,' . $customer->id . '|max:255',  // Ensure email is unique except for the current customer
+        'age' => 'sometimes|integer|max:255',
+        'occcupation' => 'sometimes|string|max:255',
+        'nationality' => 'sometimes|string|max:255',
+    ]);
 
-        $customer = Customer::findOrFail($id);
-        $customer->update($request->all());
-
+    if ($validator->fails()) {
         return response()->json([
-            'status' => true,
-            'message' => 'Customer updated successfully',
-            'data' => $customer
-        ], 200);
+            'status' => false,
+            'message' => 'Validation error',
+            'errors' => $validator->errors()
+        ], 422);
     }
 
-    public function destroy($id)
-    {
-        $customer = Customer::findOrFail($id);
-        $customer->delete();
-        
-        return response()->json([
-            'status' => true,
-            'message' => 'Customer deleted successfully'
-        ], 204);
-    }
+    // Update the customer record with the validated data
+    $customer->update($request->all());
+
+    return response()->json([
+        'status' => true,
+        'message' => 'Customer updated successfully',
+        'data' => $customer
+    ], 200);
+}
+
+    
+
+public function destroy($epassportid)
+{
+    // Find the customer by epassportid
+    $customer = Customer::where('epassportid', $epassportid)->firstOrFail();
+    
+    // Delete the customer
+    $customer->delete();
+
+    // Return success response with 200 status to show the message
+    return response()->json([
+        'status' => true,
+        'message' => 'Customer deleted successfully'
+    ], 200);
+}
 
 }
