@@ -14,3 +14,8 @@ Route::get('/customers/{epassportid}', [CustomerController::class, 'show']);
 Route::post('/customers', [CustomerController::class, 'store']);
 Route::put('/customers/{epassportid}', [CustomerController::class, 'update']);
 Route::delete('/customers/{epassportid}', [CustomerController::class, 'destroy']);
+
+
+//Analytics APIs for Dashboards
+
+Route::get('/analytics/customers', [AnalyticsController::class, 'getCustomerAnalytics']);
