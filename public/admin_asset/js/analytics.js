@@ -1,3 +1,5 @@
+
+
 function loadNationalityChart() {
     // Fetch customer analytics data from the server
     fetch('/analytics/customers')
@@ -77,7 +79,71 @@ function loadNationalityChart() {
         });
 }
 
+function updateTotalUsers() {
+    // Fetch the total customer count from the server
+    fetch('/analytics/total-customers')
+        .then(response => response.json()) // Parse the JSON from the response
+        .then(data => {
+            // Check if we got the total_customers value from the server
+            if (data.total_customers !== undefined) {
+                // Update the "Total Users" value in the card
+                document.getElementById('total-users-count').innerText = data.total_customers;
+            } else {
+                console.error("Total users data not found in the response.");
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching total users data:', error);
+        });
+}
+
+function updateTotalRockets(){
+    fetch('/analytics/total_rockets')
+    .then(response => response.json())
+    .then(data => {
+        if (data.total_rockets !== undefined) {
+            document.getElementById('total-rockets-html').innerText = data.total_rockets;
+        } else {
+            console.error("Total users data not found in the response."); 
+        }
+    })
+    .catch(error =>{
+        console.error('Error fetching total users data:', error);
+    });
+}
+
+function updateTotalSales(){
+    fetch('/analytics/total_sales')
+    .then(response => response.json())
+    .then(data => {
+        if (data.total_sales !== undefined) {
+            document.getElementById('total-sales-html').innerText = '$'+data.total_sales;
+
+            console.log('Total Sales:', data.total_sales);
+        } else {
+            console.error("Total sales data not found in the response."); 
+        }
+    })  
+}
+
+function updateTotalSpaceStations(){
+    fetch('/analytics/total_space_stations')
+    .then(response => response.json())
+    .then(data => {
+        if (data.total_space_stations !== undefined) {
+            document.getElementById('total-space-stations-html').innerText = data.total_space_stations;
+            console.log('Total Space Stations:', data.total_space_stations);
+        } else {
+            console.error("Total space stations data not found in the response."); 
+        }
+    })
+}
+
 // Event listener to load the chart after the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', function() {
-    loadNationalityChart(); // Call the function to load and display the chart
+    loadNationalityChart();
+    updateTotalUsers(); // Call the function to load and display the chart
+    updateTotalRockets();
+    updateTotalSales();
+    updateTotalSpaceStations();
 });

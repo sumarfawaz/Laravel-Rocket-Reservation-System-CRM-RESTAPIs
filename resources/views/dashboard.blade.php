@@ -1,4 +1,8 @@
-@extends('admin.layouts.layout')
-@section('admin_layout')
-@include('partials.dashboard-content')
+@extends('layouts.app')
+@section('content')
+<div>
+    @include('partials.dashboard-content')
+</div>
+
 @endsection
+

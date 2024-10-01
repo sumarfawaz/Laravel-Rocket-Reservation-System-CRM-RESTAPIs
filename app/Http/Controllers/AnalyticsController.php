@@ -3,30 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\Rocket;
+use App\Models\Ticket;
+use App\Models\SpaceStation;
 use Illuminate\Http\Request;
 
 class AnalyticsController extends Controller
 {
-    // Protected property to store all customers
-    protected $customers;
-
-    // Constructor to fetch customers once
-    public function __construct()
-    {
-        // Fetch all customers when the controller is instantiated
-        $this->customers = Customer::all();
-    }
-
     // Method to get customer analytics by nationality
     public function getCustomerAnalyticsByNationality()
     {
+        // Fetch all customers
+        $customers = Customer::all();
+
         // Check if there are customers
-        if ($this->customers->isEmpty()) {
+        if ($customers->isEmpty()) {
             return response()->json(['message' => 'No customers found'], 404);
         }
 
         // Group customers by nationality
-        $nationalities = $this->customers->groupBy('nationality');
+        $nationalities = $customers->groupBy('nationality');
 
         // Prepare an associative array where nationality is the key and count is the value
         $analyticsData = $nationalities->mapWithKeys(function ($group, $key) {
@@ -37,10 +33,32 @@ class AnalyticsController extends Controller
         return response()->json($analyticsData);
     }
 
-    // You can add more methods that reuse the $this->customers property
+    // Method to get the total number of customers
     public function getCustomerCount()
     {
-        // Simply return the total number of customers
-        return response()->json(['total_customers' => $this->customers->count()]);
+        $customerCount = Customer::count();
+        return response()->json(['total_customers' => $customerCount]);
+    }
+
+    // Method to get the total number of rockets
+    public function getRocketCount()
+    {
+        $rocketCount = Rocket::count();
+        return response()->json(['total_rockets' => $rocketCount]);
+    }
+
+    // Method to get total sales from tickets
+    public function getTotalSales()
+    {
+        // Get sum of total_price from all tickets
+        $totalSales = Ticket::sum('total_price');
+        return response()->json(['total_sales' => $totalSales]);
+    }
+
+    //Method to get total count of space stations
+    public function getSpaceStationCount()
+    {
+        $spaceStationCount = SpaceStation::count();
+        return response()->json(['total_space_stations' => $spaceStationCount]);
     }
 }

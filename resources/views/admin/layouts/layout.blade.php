@@ -16,8 +16,13 @@
 
     <title>{{ $title ?? 'Default Title' }}</title>
 
+    @livewireStyles
     <link href="{{asset('admin_asset/css/app.css')}}" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    
+
 
     <style>
         .sidebar-content {
@@ -29,16 +34,26 @@
         }
     
         .sidebar-item a {
-            color: white; /* Change text color */
+            color: rgb(54, 159, 230); /* Change text color */
         }
 
         .sidebar-item a {
-            background-color: black; /* Change text color */
+            background-color: rgb(48, 46, 46); /* Change text color */
         }
     
         .sidebar-item a:hover {
             background-color: #2980b9; /* Hover color */
         }
+
+        table {
+        margin-top: 0px; /* Adjust as needed */
+        width: 100%; /* Ensure full width */
+    }
+
+    .modal-dialog {
+        max-width: 500px; /* Adjust modal width as needed */
+    }
+
     </style>
     
 </head>
@@ -54,28 +69,28 @@
                 <ul class="sidebar-nav">
                     <li class="sidebar-header">Controls</li>
 
-                    <li class="sidebar-item active">
-                        <a class="sidebar-link" href="index.html">
+                    <li class="sidebar-item {{ request()->is('dashboard') ? 'active' : '' }}">
+                        <a class="sidebar-link" href="{{ url('dashboard') }}">
                             <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
                         </a>
                     </li>
-                    <li class="sidebar-item ">
-                        <a class="sidebar-link" href="pages-profile.html">
-                            <i class="align-middle" data-feather="user"></i> <span class="align-middle">Profile</span>
+                    <li class="sidebar-item {{ request()->is('manage-users') ? 'active' : '' }}">
+                        <a class="sidebar-link" href="{{ url('manage-users') }}">
+                            <i class="align-middle" data-feather="users"></i> <span class="align-middle">Manage Users</span>
                         </a>
                     </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="pages-sign-in.html">
+                    <li class="sidebar-item {{ request()->is('sign-in') ? 'active' : '' }}">
+                        <a class="sidebar-link" href="{{ url('sign-in') }}">
                             <i class="align-middle" data-feather="log-in"></i> <span class="align-middle">Sign In</span>
                         </a>
                     </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="pages-sign-up.html">
+                    <li class="sidebar-item {{ request()->is('sign-up') ? 'active' : '' }}">
+                        <a class="sidebar-link" href="{{ url('sign-up') }}">
                             <i class="align-middle" data-feather="user-plus"></i> <span class="align-middle">Sign Up</span>
                         </a>
                     </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="pages-blank.html">
+                    <li class="sidebar-item {{ request()->is('blank') ? 'active' : '' }}">
+                        <a class="sidebar-link" href="{{ url('blank') }}">
                             <i class="align-middle" data-feather="book"></i> <span class="align-middle">Blank</span>
                         </a>
                     </li>
@@ -326,6 +341,7 @@
                 <div class="container-fluid p-0">
                     <!-- Place the dynamic content here -->
                     @yield('admin_layout')
+                    
                 </div>
             </main>
         </div>
@@ -334,8 +350,10 @@
     <script src="{{asset('admin_asset/js/app.js')}}"></script>
     
     <script src="{{asset('admin_asset/js/analytics.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
         
-    
+    @livewireScripts
 </body>
 
 </html>

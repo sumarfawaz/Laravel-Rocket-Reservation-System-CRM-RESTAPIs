@@ -10,12 +10,11 @@ class CustomerController extends Controller
 {
     public function index()
     {
-        $customers = Customer::all();
-        return response()->json([
-            'status' => true,
-            'message' => 'Customers retrieved successfully',
-            'data' => $customers
-        ], 200);
+        $customers = Customer::all(); // Fetch all customers
+        $title = 'RocketX - Manage Users'; // Define the title
+
+        // Pass customers and title to the manage-users view
+        return view('manage-users', compact('customers', 'title')); 
     }
 
     public function show($epassportid)
