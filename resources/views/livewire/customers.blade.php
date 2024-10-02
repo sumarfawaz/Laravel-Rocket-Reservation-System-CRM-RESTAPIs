@@ -1,8 +1,7 @@
+<div class="container">
 <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
 
-    <div class="mt-8 text-2xl">
-        Customers
-    </div>
+<h1 class="h3 mb-3"><strong>Manage Customers</strong></h1>
 
     <div class="mt-6">
         <div class="flex justify-between">
@@ -81,7 +80,7 @@
 <!-- Add New Customer -->
 <x-dialog-modal wire:model.defer="confirmingCustomerAdd">
     <x-slot name="title">
-        {{ isset($customer->id) ? 'Edit Customer' : 'Add Customer' }}
+    {{ $isEditMode ? 'Edit Customer' : 'Add Customer' }}
     </x-slot>
 
     <x-slot name="content">
@@ -154,4 +153,5 @@
 </x-dialog-modal>
 
 
+</div>
 </div>

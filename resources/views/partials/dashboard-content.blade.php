@@ -20,11 +20,12 @@
                                     </div>
                                 </div>
                             </div>
-                            <h1 class="mt-1 mb-3" id="total-users-count">Loading...</h1>
-                            <!-- <div class="mb-0">
-                                <span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i> -3.65% </span>
-                                <span class="text-muted">Since last week</span>
-                            </div> -->
+                            <b></b><h1 style="font-weight:800;" class="mt-1 mb-3" id="total-users-count">Loading...</h1></b>
+                            <div class="mb-0">
+                                <a href="/manage-users">
+                                    <button class="btn btn-primary" id="total-users-button">View Users</button>
+                                </a>
+                            </div>
                         </div>
                     </div>
                     <div class="card">
@@ -40,11 +41,12 @@
                                     </div>
                                 </div>
                             </div>
-                            <h1 class="mt-1 mb-3" id="total-rockets-html">Loading</h1>
-                            <!-- <div class="mb-0">
-                                <span class="text-success"> <i class="mdi mdi-arrow-bottom-right"></i> 5.25% </span>
-                                <span class="text-muted">Since last week</span>
-                            </div> -->
+                            <h1 class="mt-1 mb-3" style="font-weight:800;" id="total-rockets-html">Loading</h1>
+                            <div class="mb-0">
+                                <a href="/manage-rockets">
+                                    <button class="btn btn-warning" id="total-users-button">View Rockets</button>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -62,13 +64,15 @@
                                     </div>
                                 </div>
                             </div>
-                            <h1 class="mt-1 mb-3" id="total-sales-html">Loading</h1>
-                            <!-- <div class="mb-0">
-                                <span class="text-success"> <i class="mdi mdi-arrow-bottom-right"></i> 6.65% </span>
-                                <span class="text-muted">Since last week</span>
-                            </div> -->
+                            <h1 class="mt-1 mb-3" style="font-weight:800;" id="total-sales-html">Loading</h1>
+                            <div class="mb-0">
+                                <a href="/view-sales">
+                                    <button class="btn btn-danger" id="total-users-button">View Sales</button>
+                                </a>
+                            </div>
                         </div>
                     </div>
+
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
@@ -78,15 +82,16 @@
 
                                 <div class="col-auto">
                                     <div class="stat text-primary">
-                                        <i class="align-middle" data-feather="shopping-cart"></i>
+                                        <i class="align-middle" data-feather="globe"></i>
                                     </div>
                                 </div>
                             </div>
-                            <h1 class="mt-1 mb-3" id="total-space-stations-html">Loading</h1>
-                            <!-- <div class="mb-0">
-                                <span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i> -2.25% </span>
-                                <span class="text-muted">Since last week</span>
-                            </div> -->
+                            <h1 class="mt-1 mb-3" style="font-weight:800;" id="total-space-stations-html">Loading</h1>
+                            <div class="mb-0">
+                                <a href="/manage-space-stations">
+                                    <button class="btn btn-info" id="total-users-button">View Space Stations</button>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -102,7 +107,7 @@
             </div>
             <div class="card-body py-3">
                 <div class="chart chart-sm">
-                    <canvas id="chartjs-dashboard-line"></canvas>
+                    <canvas id="tickets-by-date-chart"></canvas>
                 </div>
             </div>
         </div>
@@ -138,7 +143,7 @@
         <div class="card flex-fill">
             <div class="card-header">
 
-                <h5 class="card-title mb-0">Calendar</h5>
+                <h5 class="card-title mb-0">Events Calendar</h5>
             </div>
             <div class="card-body d-flex">
                 <div class="align-self-center w-100">

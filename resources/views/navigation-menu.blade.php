@@ -18,6 +18,15 @@
                     <x-nav-link href="{{ route('manage-users') }}" :active="request()->routeIs('manage-users')">
                         {{ __('Manage Customers') }}
                     </x-nav-link>
+                    <x-nav-link href="{{ route('manage-rockets') }}" :active="request()->routeIs('manage-rockets')">
+                        {{ __('Manage Rockets') }}
+                    </x-nav-link>
+                    <x-nav-link href="{{ route('manage-space-stations') }}" :active="request()->routeIs('manage-space-stations')">
+                        {{ __('Manage Space Stations') }}
+                    </x-nav-link>
+                    <x-nav-link href="{{ route('view-sales') }}" :active="request()->routeIs('view-sales')">
+                        {{ __('View Sales') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -147,6 +156,15 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link href="{{ route('manage-users') }}" :active="request()->routeIs('manage-users')">
                 {{ __('Manage Customers') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('manage-rockets') }}" :active="request()->routeIs('manage-rockets')">
+                {{ __('Manage Rockets') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('manage-space-stations') }}" :active="request()->routeIs('manage-space-stations')">
+                {{ __('Manage Space Stations') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('view-sales') }}" :active="request()->routeIs('view-sales')">
+                {{ __('View Sales') }}
             </x-responsive-nav-link>
         </div>
 

@@ -7,6 +7,7 @@ use App\Http\Controllers\RocketController;
 use App\Http\Controllers\SpaceStationController;
 use App\Http\Controllers\SchedulerController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\AnalyticsController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();

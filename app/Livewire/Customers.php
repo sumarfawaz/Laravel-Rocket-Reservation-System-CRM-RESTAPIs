@@ -17,6 +17,9 @@ class Customers extends Component
     public $confirmingCustomerDeletion = false;
     public $confirmingCustomerAdd = false;
 
+    public $isEditMode = false; // Property to track if we're editing or creating
+
+
     public function boot()
     {
         Schema::defaultStringLength(191);
@@ -92,6 +95,7 @@ class Customers extends Component
     public function confirmCustomerAdd()
     {
         $this->customer = []; // Clear previous customer data
+        $this->isEditMode = false; // Set to create mode
         $this->confirmingCustomerAdd = true;
     }
 
@@ -104,7 +108,7 @@ class Customers extends Component
         if ($customer) {
             // Populate the $this->customer property with the customer's data
             $this->customer = $customer->toArray(); // Convert to array if needed for form binding
-            
+            $this->isEditMode = true;
             // Open the modal for editing
             $this->confirmingCustomerAdd = true; // Change to true to show the modal
         } else {
@@ -126,6 +130,8 @@ class Customers extends Component
             $customer->update($this->customer);
             session()->flash('success', 'Customer updated successfully.');
             \Log::info('Customer updated successfully.');
+            $this->confirmingCustomerAdd = false;
+            $this->customer = [];
         } else {
             try {
                 // Create the customer if validation passed
@@ -141,17 +147,17 @@ class Customers extends Component
                 ]);
                 session()->flash('success', 'Customer created successfully.');
                 \Log::info('Customer created successfully.');
+                $this->isEditMode = false;
+                $this->confirmingCustomerAdd = false;
+                $this->customer = [];
             } catch (\Illuminate\Validation\ValidationException $e) {
                 \Log::error('Validation failed: ' . json_encode($e->errors()));
                 session()->flash('error', 'Validation failed: Please check your inputs.');
             } catch (\Exception $e) {
                 \Log::error('Error saving customer: ' . $e->getMessage());
-                session()->flash('error', 'An error occurred while saving the customer. Please try again.');
+                session()->flash('error', 'An error occurred while saving the rocket. Please try again.');
             }
         }
-
-        // Reset customer data and close the modal regardless of success or failure
-        $this->confirmingCustomerAdd = false;
-        $this->customer = [];
+        
     }
 }

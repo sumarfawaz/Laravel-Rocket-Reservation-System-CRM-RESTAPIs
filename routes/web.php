@@ -4,67 +4,63 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\AnalyticsController;
 
-
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
-    
+// Routes requiring authentication and verification
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
+
+    // Dashboard Route
     Route::get('/dashboard', function () {
         $title = 'RocketX - Dashboard';
-        return view('dashboard',compact('title'));
+        return view('dashboard', compact('title'));
     })->name('dashboard');
-});
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
-    
+    // Management Routes
     Route::get('/manage-users', function () {
         $title = 'RocketX - Customers';
-        return view('manage-users',compact('title'));
+        return view('manage-users', compact('title'));
     })->name('manage-users');
+
+    Route::get('/manage-rockets', function () {
+        $title = 'RocketX - Rockets';
+        return view('manage-rockets', compact('title'));
+    })->name('manage-rockets');
+
+    Route::get('/manage-space-stations', function () {
+        $title = 'RocketX - Space Stations';
+        return view('manage-space-stations', compact('title'));
+    })->name('manage-space-stations');
+
+    Route::get('/view-sales', function () {
+        $title = 'RocketX - Tickets';
+        return view('view-sales', compact('title'));
+    })->name('view-sales');
+
 });
 
+// Analytics Routes
+Route::prefix('analytics')->group(function () {
+    Route::get('/customers', [AnalyticsController::class, 'getCustomerAnalyticsByNationality']);
+    Route::get('/total-customers', [AnalyticsController::class, 'getCustomerCount']);
+    Route::get('/total_rockets', [AnalyticsController::class, 'getRocketCount']);
+    Route::get('/total_sales', [AnalyticsController::class, 'getTotalSales']);
+    Route::get('/total_space_stations', [AnalyticsController::class, 'getSpaceStationCount']);
+    Route::get('/tickets-by-date', [AnalyticsController::class, 'getTicketsByCreationDate']);
 
-// Route::get('/manage-users', [CustomerController::class, 'index'])
-//     ->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])
-//     ->name('manage-users');
+});
 
+// Customer Routes
+Route::prefix('customers')->group(function () {
+    Route::get('/', [CustomerController::class, 'index'])->name('customers.index');
+    Route::post('/', [CustomerController::class, 'store'])->name('customers.store');
+    Route::get('/{epassportid}', [CustomerController::class, 'show'])->name('customers.show');
+    Route::put('/{epassportid}', [CustomerController::class, 'update'])->name('customers.update');
+    Route::delete('/{epassportid}', [CustomerController::class, 'destroy'])->name('customers.destroy');
+});
 
-
-//Analytics Routes
-Route::get('/analytics/customers', [AnalyticsController::class, 'getCustomerAnalyticsByNationality']);
-Route::get('/analytics/total-customers', [AnalyticsController::class, 'getCustomerCount']);
-
-//Rocket Routes
-Route::get('/analytics/total_rockets', [AnalyticsController::class, 'getRocketCount']);
-
-//Sales Routes
-Route::get('/analytics/total_sales', [AnalyticsController::class, 'getTotalSales']);
-
-//Space Station Routes
-Route::get('/analytics/total_space_stations', [AnalyticsController::class, 'getSpaceStationCount']);
-
-//Customer Routes
-Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
-// Add the destroy route
-Route::delete('/customers/{epassportid}', [CustomerController::class, 'destroy'])->name('customers.destroy');
-// Add the show route
-Route::get('/customers/{epassportid}', [CustomerController::class, 'show'])->name('customers.show');
-// Add the store route
-Route::post('/customers', [CustomerController::class, 'store'])->name('customers.store');
-// Add the update route
-Route::put('/customers/{epassportid}', [CustomerController::class, 'update'])->name('customers.update');
-
-
+// Logout Route
 Route::post('/logout', function () {
     Auth::logout();
     return redirect('/');

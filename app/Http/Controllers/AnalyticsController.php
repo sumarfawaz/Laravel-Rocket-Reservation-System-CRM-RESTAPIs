@@ -61,4 +61,27 @@ class AnalyticsController extends Controller
         $spaceStationCount = SpaceStation::count();
         return response()->json(['total_space_stations' => $spaceStationCount]);
     }
+
+    // Method to get ticket counts based on their creation dates
+    public function getTicketsByCreationDate()
+    {
+        // Fetch all tickets with their creation date
+        $tickets = Ticket::selectRaw('DATE(created_at) as date, COUNT(*) as count')
+            ->groupBy('date')
+            ->orderBy('date')
+            ->get();
+
+        // Check if there are tickets
+        if ($tickets->isEmpty()) {
+            return response()->json(['message' => 'No tickets found'], 404);
+        }
+
+        // Prepare an associative array for the chart
+        $analyticsData = $tickets->pluck('count', 'date');
+
+        // Return the data as JSON
+        return response()->json($analyticsData);
+    }
+    
+
 }

@@ -14,6 +14,10 @@
     <!-- Bootstrap CSS from CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
+    <!-- jQuery Full Calendar -->
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css' rel='stylesheet' />
+
+
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -44,13 +48,15 @@
     @stack('modals')
 
     <!-- Bootstrap JS and dependencies (jQuery and Popper.js) -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> <!-- Full jQuery -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="{{asset('admin_asset/js/analytics.js')}}"></script>
-    <script src="{{asset('admin_asset/js/app.js')}}"></script>
+    <script src="{{ asset('admin_asset/js/analytics.js') }}"></script>
+    <script src="{{ asset('admin_asset/js/app.js') }}"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js'></script>
 
-
+    <!-- Include Livewire Scripts -->
     @livewireScripts
 </body>
 </html>

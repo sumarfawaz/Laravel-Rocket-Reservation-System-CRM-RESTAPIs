@@ -1,5 +1,3 @@
-
-
 function loadNationalityChart() {
     // Fetch customer analytics data from the server
     fetch('/analytics/customers')
@@ -104,11 +102,11 @@ function updateTotalRockets(){
         if (data.total_rockets !== undefined) {
             document.getElementById('total-rockets-html').innerText = data.total_rockets;
         } else {
-            console.error("Total users data not found in the response."); 
+            console.error("Total rockets data not found in the response."); 
         }
     })
     .catch(error =>{
-        console.error('Error fetching total users data:', error);
+        console.error('Error fetching total rockets data:', error);
     });
 }
 
@@ -123,7 +121,7 @@ function updateTotalSales(){
         } else {
             console.error("Total sales data not found in the response."); 
         }
-    })  
+    });  
 }
 
 function updateTotalSpaceStations(){
@@ -136,14 +134,91 @@ function updateTotalSpaceStations(){
         } else {
             console.error("Total space stations data not found in the response."); 
         }
-    })
+    });
 }
 
-// Event listener to load the chart after the DOM is fully loaded
+// Function to initialize FullCalendar
+function initializeCalendar() {
+    $('#datetimepicker-dashboard').fullCalendar({
+        // Your calendar options here
+        header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month,agendaWeek,agendaDay'
+        },
+        events: '/your-event-endpoint', // Replace with your endpoint to fetch events
+    });
+}
+
+function loadTicketsByDateChart() {
+    // Fetch ticket analytics data from the server
+    fetch('/analytics/tickets-by-date')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            const ctx = document.getElementById('tickets-by-date-chart').getContext('2d');
+
+            // Prepare labels and data from the received object
+            const labels = Object.keys(data); // Dates
+            const counts = Object.values(data); // Corresponding counts
+
+            // Create the chart
+            new Chart(ctx, {
+                type: 'line', // or 'bar', depending on your preference
+                data: {
+                    labels: labels, // Dates
+                    datasets: [{
+                        label: 'Tickets Created by Date',
+                        data: counts, // Corresponding counts
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 2,
+                        fill: false
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                stepSize: 1,
+                                beginAtZero: true,
+                            },
+                        }],
+                        xAxes: [{
+                            ticks: {
+                                stepSize: 1,
+                                beginAtZero: true,
+                            },
+                        }]
+                    },
+                    legend: {
+                        display: false
+                    },
+                    tooltips: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return tooltipItem.yLabel;
+                            }
+                        }
+                    }
+                }
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching ticket analytics data:', error);
+        });
+}
+
+// Event listener to load the chart and calendar after the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', function() {
     loadNationalityChart();
     updateTotalUsers(); // Call the function to load and display the chart
     updateTotalRockets();
     updateTotalSales();
     updateTotalSpaceStations();
+    initializeCalendar(); // Call the function to initialize the calendar
+    loadTicketsByDateChart();   
 });
