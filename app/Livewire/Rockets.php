@@ -32,24 +32,24 @@ class Rockets extends Component
         if (isset($this->rocket['id'])) {
             return [
                 'rocket.rocketname' => 'string|unique:rockets,rocketname,' . $this->rocket['id'] . '|max:255', // Ensure the rocketname is unique except for the current rocket
-                'rocket.height' => 'sometimes|integer|max:255',
-                'rocket.diameter' => 'sometimes|integer|max:255',
-                'rocket.mass' => 'sometimes|integer|max:255',
-                'rocket.payloadtoleo' => 'sometimes|integer|max:255',
-                'rocket.payloadtogto' => 'sometimes|integer|max:255',
-                'rocket.payloadtomars' => 'sometimes|integer|max:255',
+                'rocket.height' => 'sometimes|numeric|min:0', // numeric to accept decimal values
+                'rocket.diameter' => 'sometimes|numeric|min:0', // numeric for decimal values
+                'rocket.mass' => 'sometimes|integer|min:0',
+                'rocket.payloadtoleo' => 'sometimes|integer|min:0',
+                'rocket.payloadtogto' => 'sometimes|integer|min:0',
+                'rocket.payloadtomars' => 'sometimes|integer|min:0',
             ];
         }
 
         // Return rules for creating a rocket
         return [
             'rocket.rocketname' => 'required|string|unique:rockets,rocketname|max:255',
-            'rocket.height' => 'required|integer|max:255',
-            'rocket.diameter' => 'required|integer|max:255',
-            'rocket.mass' => 'required|integer|max:255',
-            'rocket.payloadtoleo' => 'required|integer|max:255',
-            'rocket.payloadtogto' => 'required|integer|max:255',
-            'rocket.payloadtomars' => 'required|integer|max:255',
+            'rocket.height' => 'required|integer|min:0',
+            'rocket.diameter' => 'required|integer|min:0',
+            'rocket.mass' => 'required|integer|min:0',
+            'rocket.payloadtoleo' => 'required|integer|min:0',
+            'rocket.payloadtogto' => 'required|integer|min:0',
+            'rocket.payloadtomars' => 'required|integer|min:0',
         ];
     }
 

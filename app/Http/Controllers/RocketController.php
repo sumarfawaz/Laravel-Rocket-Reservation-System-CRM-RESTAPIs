@@ -36,8 +36,8 @@ class RocketController extends Controller
         {
             $validator = Validator::make($request->all(), [
                 'rocketname' => 'required|string|unique:rockets|max:255',
-                'height' => 'required|numeric|min:0', // numeric to accept decimal values
-                'diameter' => 'required|numeric|min:0', // numeric for decimal values
+                'height' => 'required|integer|min:0', // numeric to accept decimal values
+                'diameter' => 'required|integer|min:0', // numeric for decimal values
                 'mass' => 'required|integer|min:0', // assuming mass is a positive integer
                 'payloadtoleo' => 'required|integer|min:0', // integer values for payload
                 'payloadtogto' => 'required|integer|min:0',
@@ -68,8 +68,8 @@ class RocketController extends Controller
 
             $validator = Validator::make($request->all(), [
                 'rocketname' => 'sometimes|string|unique:rockets,rocketname,'.$rocket->id.'|max:255',
-                'height' => 'sometimes|numeric|min:0', // numeric to accept decimal values
-                'diameter' => 'sometimes|numeric|min:0', // numeric for decimal values
+                'height' => 'sometimes|integer|min:0', // numeric to accept decimal values
+                'diameter' => 'sometimes|integer|min:0', // numeric for decimal values
                 'mass' => 'sometimes|integer|min:0', // assuming mass is a positive integer
                 'payloadtoleo' => 'sometimes|integer|min:0', // integer values for payload
                 'payloadtogto' => 'sometimes|integer|min:0',

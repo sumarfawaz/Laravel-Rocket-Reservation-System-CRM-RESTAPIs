@@ -8,6 +8,7 @@ use App\Http\Controllers\SpaceStationController;
 use App\Http\Controllers\SchedulerController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\AnalyticsController;
+use App\Http\Controllers\CustomerLoginController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -51,6 +52,14 @@ Route::post('/tickets', [TicketController::class, 'store']);
 Route::put('/tickets/{id}', [TicketController::class, 'update']);
 Route::delete('/tickets/{id}', [TicketController::class, 'destroy']);
 
+// Customer Login APIs
+Route::get('/customer_login', [CustomerLoginController::class, 'index']);
+Route::post('/customer_login', [CustomerLoginController::class, 'store']);
+Route::get('/customer_login/{epassportid}', [CustomerLoginController::class, 'show']);
+Route::post('/customer_login/{epassportid}/verify', [CustomerLoginController::class, 'verifyPassword']);
+Route::put('/customer_login/{epassportid}', [CustomerLoginController::class, 'update']);
+Route::delete('/customer_login/{epassportid}', [CustomerLoginController::class, 'destroy']);
+
 
 //Analytics APIs for Dashboards
-Route::get('/analytics/customers', [AnalyticsController::class, 'getCustomerAnalytics']);
+Route::post('/analytics/customers', [AnalyticsController::class, 'getCustomerAnalytics']);
