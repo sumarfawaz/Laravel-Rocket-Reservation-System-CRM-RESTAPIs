@@ -44,8 +44,8 @@ class Rockets extends Component
         // Return rules for creating a rocket
         return [
             'rocket.rocketname' => 'required|string|unique:rockets,rocketname|max:255',
-            'rocket.height' => 'required|integer|min:0',
-            'rocket.diameter' => 'required|integer|min:0',
+            'rocket.height' => 'required|numeric|min:0',
+            'rocket.diameter' => 'required|numeric|min:0',
             'rocket.mass' => 'required|integer|min:0',
             'rocket.payloadtoleo' => 'required|integer|min:0',
             'rocket.payloadtogto' => 'required|integer|min:0',
